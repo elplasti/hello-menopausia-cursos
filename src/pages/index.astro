@@ -32,7 +32,16 @@ const heroImage = featured[0]?.data.thumbnail ?? courses[0]?.data.thumbnail;
       <div class="hero-visual">
         {
           heroImage && (
-            <img class="hero-photo" src={heroImage} alt="Sesión destacada del catálogo de cursos" width="640" height="800" />
+            <>
+              <img class="hero-photo" src={heroImage} alt="Sesión destacada del catálogo de cursos" width="640" height="440" />
+              <span class="play-overlay" aria-hidden="true">
+                <span class="play-btn">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5.14v13.72L19 12 8 5.14z"></path>
+                  </svg>
+                </span>
+              </span>
+            </>
           )
         }
         <span class="hero-pill hero-pill-a">Masterclass</span>
