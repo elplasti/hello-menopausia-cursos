@@ -554,6 +554,10 @@ body.menu-open {
   min-height: 100%;
 }
 
+.course-card[hidden] {
+  display: none !important;
+}
+
 .course-card:hover {
   color: inherit;
   box-shadow: var(--shadow);
