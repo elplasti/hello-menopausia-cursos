@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import ExampleBanner from '../../components/ExampleBanner.astro';
+import { getPublishedCourses } from '../../lib/content';
+
+const courses = await getPublishedCourses();
+const masterclassCount = courses.filter((course) => course.data.format === 'Masterclass').length;
+const tallerCount = courses.filter((course) => course.data.format === 'Taller').length;
+---
+
+<BaseLayout
+  title="Cursos y talleres"
+  description="Catálogo de cursos y talleres de Hello Menopausia. Contenido de ejemplo con videos de YouTube."
+>
+  <ExampleBanner />
+  <section class="page-hero page-hero-plain">
+    <div class="container">
+      <p class="eyebrow">Catálogo</p>
+      <h1>Cursos y <em>talleres</em></h1>
+      <p class="hero-lead">
+        Doce sesiones de ejemplo para acompañar a las mujeres en la menopausia. Elige una ficha para
+        ver el video y conocer a la ponente.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0">
+    <div class="container">
+      <div class="filters" role="group" aria-label="Filtrar por formato">
+        <button class="filter-pill" type="button" data-filter="todos" aria-pressed="true">
+          Todos <span class="filter-count">{courses.length}</span>
+        </button>
+        <button class="filter-pill" type="button" data-filter="Masterclass" aria-pressed="false">
+          Masterclass <span class="filter-count">{masterclassCount}</span>
+        </button>
+        <button class="filter-pill" type="button" data-filter="Taller" aria-pressed="false">
+          Talleres <span class="filter-count">{tallerCount}</span>
+        </button>
+      </div>
+      <div class="course-grid" data-course-grid>
+        {courses.map((course) => <CourseCard course={course} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-course-grid] .course-card');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter ?? 'todos';
+      buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      cards.forEach((card) => {
+        const show = filter === 'todos' || card.dataset.format === filter;
+        card.hidden = !show;
+      });
+    });
+  });
+</script>

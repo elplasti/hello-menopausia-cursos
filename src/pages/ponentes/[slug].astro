@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import ExampleBanner from '../../components/ExampleBanner.astro';
+import {
+  getCoursesBySpeaker,
+  getSpeakers,
+  speakerInitials,
+  type Speaker,
+} from '../../lib/content';
+
+export async function getStaticPaths() {
+  const speakers = await getSpeakers();
+  return speakers.map((speaker) => ({
+    params: { slug: speaker.id },
+    props: { speaker },
+  }));
+}
+
+interface Props {
+  speaker: Speaker;
+}
+
+const { speaker } = Astro.props;
+const courses = await getCoursesBySpeaker(speaker.id);
+const social = speaker.data.social ?? { instagram: '', linkedin: '', website: '' };
+---
+
+<BaseLayout title={speaker.data.name} description={speaker.data.bio} canonical={`/ponentes/${speaker.id}`}>
+  <ExampleBanner />
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs">
+        <a href="/">Inicio</a>
+        <span>/</span>
+        <a href="/ponentes">Ponentes</a>
+        <span>/</span>
+        <span>{speaker.data.name}</span>
+      </p>
+      <div style="display:flex; gap:1.25rem; align-items:flex-start; flex-wrap:wrap">
+        <span class="avatar avatar-lg" aria-hidden="true">{speakerInitials(speaker.data.name)}</span>
+        <div>
+          <p class="eyebrow">{speaker.data.title}</p>
+          <h1>{speaker.data.name}</h1>
+          <div class="speaker-meta">
+            {speaker.data.specialties.map((specialty) => <span class="tag">{specialty}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0">
+    <div class="container course-layout">
+      <div class="panel">
+        <h2 style="margin-top:0">Bio</h2>
+        <p>{speaker.data.bio}</p>
+        {
+          speaker.data.canEditOwnProfile && (
+            <p>
+              <a href="/ponentes/mi-perfil">Actualizar mi perfil</a> — el esquema ya está listo para
+              que cada ponente edite su información.
+            </p>
+          )
+        }
+      </div>
+      <aside class="speaker-panel">
+        <h2 style="margin-top:0; font-size:1.15rem">Contacto y redes</h2>
+        <p>Campos listos para cuando la ponente complete su perfil.</p>
+        <ul class="check-list" style="list-style:none; padding:0">
+          <li>Email: {speaker.data.email || 'Pendiente'}</li>
+          <li>Instagram: {social.instagram || 'Pendiente'}</li>
+          <li>LinkedIn: {social.linkedin || 'Pendiente'}</li>
+          <li>Sitio: {social.website || 'Pendiente'}</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <h2>Sesiones de <em>{speaker.data.name}</em></h2>
+      </div>
+      {
+        courses.length > 0 ? (
+          <div class="course-grid">
+            {courses.map((course) => (
+              <CourseCard course={course} />
+            ))}
+          </div>
+        ) : (
+          <p class="empty-state">Aún no hay sesiones publicadas para esta ponente.</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

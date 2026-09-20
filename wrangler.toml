@@ -1,0 +1,5 @@
+# Cloudflare Pages — opcional. El build público no requiere secretos.
+# Despliegue: npx wrangler pages deploy dist --project-name hello-menopausia-cursos
+name = "hello-menopausia-cursos"
+compatibility_date = "2026-09-20"
+pages_build_output_dir = "dist"

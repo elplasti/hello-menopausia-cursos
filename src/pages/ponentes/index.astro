@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExampleBanner from '../../components/ExampleBanner.astro';
+import SpeakerCard from '../../components/SpeakerCard.astro';
+import { getPublishedCourses, getSpeakers } from '../../lib/content';
+
+const speakers = await getSpeakers();
+const courses = await getPublishedCourses();
+const counts = Object.fromEntries(
+  speakers.map((speaker) => [
+    speaker.id,
+    courses.filter((course) => course.data.speakerSlug === speaker.id).length,
+  ]),
+);
+---
+
+<BaseLayout
+  title="Ponentes"
+  description="Conoce a las ponentes de los cursos y talleres de Hello Menopausia."
+>
+  <ExampleBanner />
+  <section class="page-hero page-hero-plain">
+    <div class="container">
+      <p class="eyebrow">Comunidad</p>
+      <h1>Ponentes que acompañan esta <em>etapa</em></h1>
+      <p class="hero-lead">
+        Perfiles de ejemplo. Cada ponente podrá completar su información desde el portal
+        <a href="/ponentes/mi-perfil">Mi perfil</a>.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0">
+    <div class="container">
+      <div class="speaker-grid">
+        {
+          speakers.map((speaker) => (
+            <SpeakerCard speaker={speaker} courseCount={counts[speaker.id] ?? 0} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

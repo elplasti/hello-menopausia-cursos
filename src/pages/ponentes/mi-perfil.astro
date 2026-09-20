@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const speakerSchema = {
+  name: 'string',
+  title: 'string',
+  bio: 'string',
+  photo: 'url?',
+  specialties: 'string[]',
+  email: 'email?',
+  social: {
+    instagram: 'url?',
+    linkedin: 'url?',
+    website: 'url?',
+  },
+  canEditOwnProfile: true,
+};
+---
+
+<BaseLayout
+  title="Mi perfil de ponente"
+  description="Portal para que las ponentes actualicen bio, especialidades y redes."
+>
+  <section class="page-hero page-hero-plain">
+    <div class="container">
+      <p class="eyebrow">Portal de ponentes</p>
+      <h1>Actualiza tu <em>perfil</em></h1>
+      <p class="hero-lead">
+        El esquema ya está listo para que cada ponente edite su información. Esta versión valida y
+        guarda un borrador en tu navegador hasta conectar el backend.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="container" style="display:grid; gap:1.5rem; grid-template-columns: 1.2fr 0.8fr">
+      <div class="contact-form" id="profile-card">
+        <p class="form-note">
+          Campos alineados a la colección <code>speakers</code>: nombre, título, bio, foto, especialidades
+          y redes.
+        </p>
+        <form id="profile-form" novalidate>
+          <div class="form-row">
+            <label for="name">Nombre *</label>
+            <input id="name" name="name" required minlength="2" autocomplete="name" />
+            <span class="field-error" data-error-for="name" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="title">Título profesional *</label>
+            <input id="title" name="title" required minlength="3" placeholder="Ponente invitada" />
+            <span class="field-error" data-error-for="title" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="bio">Bio *</label>
+            <textarea id="bio" name="bio" required minlength="40" placeholder="Cuéntanos tu enfoque y experiencia."></textarea>
+            <span class="field-error" data-error-for="bio" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="specialties">Especialidades *</label>
+            <input id="specialties" name="specialties" required placeholder="Nutrición, Hormonas, Bienestar" />
+            <span class="field-error" data-error-for="specialties" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" />
+            <span class="field-error" data-error-for="email" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="photo">Foto (URL)</label>
+            <input id="photo" name="photo" type="url" placeholder="https://" />
+            <span class="field-error" data-error-for="photo" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="instagram">Instagram</label>
+            <input id="instagram" name="instagram" type="url" placeholder="https://instagram.com/..." />
+            <span class="field-error" data-error-for="instagram" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="linkedin">LinkedIn</label>
+            <input id="linkedin" name="linkedin" type="url" placeholder="https://linkedin.com/in/..." />
+            <span class="field-error" data-error-for="linkedin" hidden></span>
+          </div>
+          <div class="form-row">
+            <label for="website">Sitio web</label>
+            <input id="website" name="website" type="url" placeholder="https://" />
+            <span class="field-error" data-error-for="website" hidden></span>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Guardar perfil</button>
+          <p class="form-error" id="profile-error" hidden></p>
+        </form>
+      </div>
+
+      <aside>
+        <div class="panel" id="schema-panel">
+          <h2 style="margin-top:0">Esquema listo</h2>
+          <p>Así se guarda el perfil para cuando exista persistencia real:</p>
+          <pre style="overflow:auto; font-size:0.8rem; background:var(--bg-soft); padding:1rem; border-radius:12px">{JSON.stringify(speakerSchema, null, 2)}</pre>
+        </div>
+        <div class="form-success" id="success-card" hidden>
+          <h2 style="margin-top:0">Perfil actualizado</h2>
+          <p id="success-copy"></p>
+          <p><a href="/ponentes">Volver a ponentes</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const STORAGE_KEY = 'hm-speaker-profile';
+  const form = document.getElementById('profile-form');
+  const errorBox = document.getElementById('profile-error');
+  const successCard = document.getElementById('success-card');
+  const successCopy = document.getElementById('success-copy');
+
+  const optionalUrlFields = ['photo', 'instagram', 'linkedin', 'website'];
+
+  function setError(name, message) {
+    const node = document.querySelector(`[data-error-for="${name}"]`);
+    if (!node) return;
+    node.hidden = !message;
+    node.textContent = message;
+  }
+
+  function isValidUrl(value) {
+    try {
+      const url = new URL(value);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  }
+
+  function validate(data) {
+    const errors = {};
+    if (data.name.length < 2) errors.name = 'Escribe tu nombre.';
+    if (data.title.length < 3) errors.title = 'Escribe tu título profesional.';
+    if (data.bio.length < 40) errors.bio = 'La bio debe tener al menos 40 caracteres.';
+    if (!data.specialties.length) errors.specialties = 'Agrega al menos una especialidad.';
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      errors.email = 'Email no válido.';
+    }
+    for (const field of optionalUrlFields) {
+      if (data[field] && !isValidUrl(data[field])) {
+        errors[field] = 'Usa una URL que empiece con https://';
+      }
+    }
+    return errors;
+  }
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    if (saved && form) {
+      for (const [key, value] of Object.entries(saved)) {
+        if (key === 'specialties' && form.elements.specialties) {
+          form.elements.specialties.value = Array.isArray(value) ? value.join(', ') : value;
+        } else if (form.elements[key]) {
+          form.elements[key].value = value ?? '';
+        }
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const raw = new FormData(form);
+    const payload = {
+      name: String(raw.get('name') || '').trim(),
+      title: String(raw.get('title') || '').trim(),
+      bio: String(raw.get('bio') || '').trim(),
+      photo: String(raw.get('photo') || '').trim(),
+      specialties: String(raw.get('specialties') || '')
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean),
+      email: String(raw.get('email') || '').trim(),
+      instagram: String(raw.get('instagram') || '').trim(),
+      linkedin: String(raw.get('linkedin') || '').trim(),
+      website: String(raw.get('website') || '').trim(),
+      canEditOwnProfile: true,
+    };
+
+    document.querySelectorAll('[data-error-for]').forEach((node) => {
+      node.hidden = true;
+      node.textContent = '';
+    });
+
+    const errors = validate(payload);
+    const keys = Object.keys(errors);
+    if (keys.length) {
+      keys.forEach((key) => setError(key, errors[key]));
+      errorBox.hidden = false;
+      errorBox.textContent = 'Revisa los campos marcados para continuar.';
+      successCard.hidden = true;
+      return;
+    }
+
+    const record = {
+      name: payload.name,
+      title: payload.title,
+      bio: payload.bio,
+      photo: payload.photo,
+      specialties: payload.specialties,
+      email: payload.email,
+      social: {
+        instagram: payload.instagram,
+        linkedin: payload.linkedin,
+        website: payload.website,
+      },
+      canEditOwnProfile: true,
+      updatedAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...payload, ...record }));
+    errorBox.hidden = true;
+    successCard.hidden = false;
+    successCopy.textContent = `Gracias, ${payload.name}. Guardamos tu perfil de ponente. Cuando exista el backend, este mismo esquema se publicará en /ponentes.`;
+    successCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+
+<style>
+  @media (max-width: 800px) {
+    .container[style*='grid-template-columns'] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
