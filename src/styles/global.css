@@ -956,8 +956,8 @@ body.menu-open {
 }
 
 .site-footer {
-  background: var(--ink);
-  color: rgba(255, 255, 255, 0.8);
+  background: #85b3c6;
+  color: var(--ink);
   padding: 3.5rem 0 1.5rem;
 }
 
@@ -966,14 +966,14 @@ body.menu-open {
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 2rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(45, 46, 69, 0.16);
 }
 
 .footer-brand p {
   margin: 1rem 0 0;
   font-size: 0.925rem;
   max-width: 18rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--ink-2);
 }
 
 .logo-footer {
@@ -986,7 +986,7 @@ body.menu-open {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--rose);
+  color: var(--ink);
 }
 
 .footer-links ul {
@@ -1000,17 +1000,17 @@ body.menu-open {
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--ink-2);
   text-decoration: none;
   font-size: 0.925rem;
 }
 
 .footer-links a:hover {
-  color: var(--white);
+  color: var(--ink);
 }
 
 .footer-muted {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--ink-3);
   font-size: 0.8rem;
 }
 
