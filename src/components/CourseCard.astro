@@ -1,0 +1,32 @@
+---
+import { truncate, type Course } from '../lib/content';
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+const href = `/cursos/${course.id}`;
+---
+
+<article class="course-card" data-format={course.data.format} data-category={course.data.category}>
+  <a class="course-card-media" href={href} aria-label={`Ver ${course.data.title}`}>
+    <img src={course.data.thumbnail} alt="" width="480" height="300" loading="lazy" />
+    <span class="play-overlay">
+      <span class="play-btn" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5.14v13.72L19 12 8 5.14z"></path>
+        </svg>
+      </span>
+    </span>
+    <span class="course-card-tags">
+      <span class="chip">{course.data.format}</span>
+      <span class="chip">{course.data.category}</span>
+    </span>
+  </a>
+  <div class="course-card-body">
+    <h3 class="course-card-title">{course.data.title}</h3>
+    <p class="course-card-desc">{truncate(course.data.description, 150)}</p>
+    <a class="course-card-cta" href={href}>Ver detalles →</a>
+  </div>
+</article>

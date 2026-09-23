@@ -1,0 +1,28 @@
+---
+import { speakerInitials, type Speaker } from '../lib/content';
+
+interface Props {
+  speaker: Speaker;
+  courseCount?: number;
+}
+
+const { speaker, courseCount } = Astro.props;
+---
+
+<a class="speaker-card" href={`/ponentes/${speaker.id}`}>
+  <span class="avatar" aria-hidden="true">{speakerInitials(speaker.data.name)}</span>
+  <div>
+    <h3>{speaker.data.name}</h3>
+    <p>{speaker.data.title}</p>
+    {
+      typeof courseCount === 'number' && (
+        <p>
+          {courseCount} {courseCount === 1 ? 'sesión' : 'sesiones'}
+        </p>
+      )
+    }
+    <div class="speaker-meta">
+      {speaker.data.specialties.map((specialty) => <span class="tag">{specialty}</span>)}
+    </div>
+  </div>
+</a>

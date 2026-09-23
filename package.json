@@ -1,0 +1,19 @@
+{
+  "name": "hello-menopausia-cursos",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hello Menopausia — Cursos y Talleres. Sitio estático en Astro para Cloudflare Pages.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "astro": "^5.13.7"
+  }
+}

@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import ExampleBanner from '../components/ExampleBanner.astro';
+import { getFeaturedCourses, getPublishedCourses, SITE } from '../lib/content';
+
+const courses = await getPublishedCourses();
+const featured = await getFeaturedCourses();
+const masterclassCount = courses.filter((course) => course.data.format === 'Masterclass').length;
+const tallerCount = courses.filter((course) => course.data.format === 'Taller').length;
+const heroImage = featured[0]?.data.thumbnail ?? courses[0]?.data.thumbnail;
+---
+
+<BaseLayout title={SITE.title} description={SITE.description}>
+  <ExampleBanner />
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Programa de cursos y talleres</p>
+        <h1>Cursos y talleres para acompañar a las mujeres en la <em>menopausia</em></h1>
+        <p class="hero-lead">
+          Hello Menopausia reúne masterclasses y talleres de especialistas en salud, nutrición y
+          bienestar. Explora 12 sesiones de ejemplo con video y conoce a las ponentes.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#catalogo">Explorar cursos</a>
+          <a class="btn btn-outline-pill" href="/ponentes">Conoce a las ponentes</a>
+        </div>
+        <p class="hero-note">Contenido de ejemplo · 12 sesiones con YouTube · sin registro para ver</p>
+      </div>
+      <div class="hero-visual">
+        {
+          heroImage && (
+            <>
+              <img class="hero-photo" src={heroImage} alt="Sesión destacada del catálogo de cursos" width="640" height="440" />
+              <span class="play-overlay" aria-hidden="true">
+                <span class="play-btn">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5.14v13.72L19 12 8 5.14z"></path>
+                  </svg>
+                </span>
+              </span>
+            </>
+          )
+        }
+        <span class="hero-pill hero-pill-a">Masterclass</span>
+        <span class="hero-pill hero-pill-b">Bienestar</span>
+        <span class="hero-pill hero-pill-c">Comunidad</span>
+      </div>
+    </div>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="section section-soft" aria-labelledby="destacados-title">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Destacados</p>
+            <h2 id="destacados-title">Empieza por estas <em>sesiones</em></h2>
+            <p class="section-lead">Tres cursos destacados del catálogo de ejemplo.</p>
+          </div>
+          <div class="course-grid">
+            {featured.map((course) => (
+              <CourseCard course={course} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" id="catalogo" aria-labelledby="catalogo-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Catálogo</p>
+        <h2 id="catalogo-title">Los 12 cursos y <em>talleres</em></h2>
+        <p class="section-lead">Filtra por formato. Cada ficha abre el video y la ficha de la ponente.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por formato">
+        <button class="filter-pill" type="button" data-filter="todos" aria-pressed="true">
+          Todos <span class="filter-count">{courses.length}</span>
+        </button>
+        <button class="filter-pill" type="button" data-filter="Masterclass" aria-pressed="false">
+          Masterclass <span class="filter-count">{masterclassCount}</span>
+        </button>
+        <button class="filter-pill" type="button" data-filter="Taller" aria-pressed="false">
+          Talleres <span class="filter-count">{tallerCount}</span>
+        </button>
+      </div>
+      <div class="course-grid" data-course-grid>
+        {courses.map((course) => <CourseCard course={course} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-course-grid] .course-card');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter ?? 'todos';
+      buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      cards.forEach((card) => {
+        const show = filter === 'todos' || card.dataset.format === filter;
+        card.hidden = !show;
+      });
+    });
+  });
+</script>

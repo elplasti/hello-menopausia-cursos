@@ -1,0 +1,466 @@
+{
+  "brand": {
+    "name": "Hello Menopausia",
+    "product": "Cursos y Talleres",
+    "fonts": {
+      "sans": "Figtree",
+      "display": "Instrument Serif"
+    },
+    "colors": {
+      "bg": "#F7F5EE",
+      "bgSoft": "#FBF8F1",
+      "ink": "#2D2E45",
+      "rose": "#D1738B",
+      "plum": "#8D5473",
+      "blue": "#6E8FB1",
+      "mustard": "#C99A3F",
+      "sage": "#87A37B",
+      "coral": "#D67861",
+      "shopifyAccent": "#8ab1c4",
+      "shopifyCream": "#fbf9ed",
+      "shopifyBlue": "#3180e2"
+    },
+    "logoBlack": "logo-negro.png",
+    "logoWhite": "logo-blanco.png",
+    "footerNote": "Hecho con 🩷 por mujeres",
+    "contactEmail": "partners@hellomenopausia.com",
+    "siteUrl": "https://www.hellomenopausia.com"
+  },
+  "layoutInspiration": "https://sin-reglas.mx/talleres — grid de cards de cursos/talleres con título, descripción corta, CTA",
+  "courses": [
+    {
+      "id": "curso-01",
+      "slug": "master-class-menopausia-mas-alla-de-los-bochornos-sindrome-metabolico",
+      "title": "Master Class: \"Menopausia más allá de los bochornos: síndrome metabólico\"",
+      "subtitle": "Inspirado en contenido público de YouTube · Medical Legal Center",
+      "description": "Sesión sobre síndrome metabólico en la menopausia. Contenido de ejemplo basado en: Master Class: \"Menopausia más allá de los bochornos: síndrome metabólico\".",
+      "category": "Salud metabólica",
+      "format": "Taller",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "DQTCjPF9Ya4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=DQTCjPF9Ya4",
+      "thumbnail": "https://i.ytimg.com/vi/DQTCjPF9Ya4/hqdefault.jpg",
+      "speakerId": "speaker-01",
+      "speakerName": "Medical Legal Center",
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "curso-02",
+      "slug": "mi-curso-disfruta-tu-menopausia",
+      "title": "Mi curso Disfruta Tu Menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · Marta Marcè",
+      "description": "Sesión sobre bienestar integral en la menopausia. Contenido de ejemplo basado en: Mi curso Disfruta Tu Menopausia.",
+      "category": "Bienestar",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "pQ4vMreMLGM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=pQ4vMreMLGM",
+      "thumbnail": "https://i.ytimg.com/vi/pQ4vMreMLGM/hqdefault.jpg",
+      "speakerId": "speaker-02",
+      "speakerName": "Marta Marcè",
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "curso-03",
+      "slug": "webinar-alimentacion-en-la-menopausia",
+      "title": "Webinar - Alimentación en la menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · Academia Aleris",
+      "description": "Sesión sobre nutrición en la menopausia. Contenido de ejemplo basado en: Webinar - Alimentación en la menopausia.",
+      "category": "Nutrición",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "3rgA88X-VYk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=3rgA88X-VYk",
+      "thumbnail": "https://i.ytimg.com/vi/3rgA88X-VYk/hqdefault.jpg",
+      "speakerId": "speaker-03",
+      "speakerName": "Academia Aleris",
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "curso-04",
+      "slug": "menopausia-fertilidad-fatiga-y-dolor-el-hilo-invisible-que-conecta-la-",
+      "title": "Menopausia, Fertilidad, Fatiga y Dolor: El Hilo Invisible que Conecta la Salud Femenina",
+      "subtitle": "Inspirado en contenido público de YouTube · Escuela de Salud Integrativa",
+      "description": "Sesión sobre salud integrativa en la menopausia. Contenido de ejemplo basado en: Menopausia, Fertilidad, Fatiga y Dolor: El Hilo Invisible que Conecta la Salud Femenina.",
+      "category": "Salud integral",
+      "format": "Taller",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "GdDPpzx1SPw",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GdDPpzx1SPw",
+      "thumbnail": "https://i.ytimg.com/vi/GdDPpzx1SPw/hqdefault.jpg",
+      "speakerId": "speaker-04",
+      "speakerName": "Escuela de Salud Integrativa",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-05",
+      "slug": "masterclass-menopausia",
+      "title": "Masterclass Menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · Doctor Actualizado",
+      "description": "Sesión sobre guía médica en la menopausia. Contenido de ejemplo basado en: Masterclass Menopausia.",
+      "category": "Medicina",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "g-GfYJ27CNk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=g-GfYJ27CNk",
+      "thumbnail": "https://i.ytimg.com/vi/g-GfYJ27CNk/hqdefault.jpg",
+      "speakerId": "speaker-05",
+      "speakerName": "Doctor Actualizado",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-06",
+      "slug": "superando-la-menopausia-con-martha-debayle",
+      "title": "Superando la Menopausia con Martha Debayle",
+      "subtitle": "Inspirado en contenido público de YouTube · Martha Debayle",
+      "description": "Sesión sobre conversatorio en la menopausia. Contenido de ejemplo basado en: Superando la Menopausia con Martha Debayle.",
+      "category": "Comunidad",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "bmcUj8z1LdE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=bmcUj8z1LdE",
+      "thumbnail": "https://i.ytimg.com/vi/bmcUj8z1LdE/hqdefault.jpg",
+      "speakerId": "speaker-06",
+      "speakerName": "Martha Debayle",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-07",
+      "slug": "consejos-para-ayudar-con-la-menopausia",
+      "title": "Consejos para ayudar con la menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · National Institute on Aging",
+      "description": "Sesión sobre autocuidado en la menopausia. Contenido de ejemplo basado en: Consejos para ayudar con la menopausia.",
+      "category": "Bienestar",
+      "format": "Taller",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "vQFPnv3KHmc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=vQFPnv3KHmc",
+      "thumbnail": "https://i.ytimg.com/vi/vQFPnv3KHmc/hqdefault.jpg",
+      "speakerId": "speaker-07",
+      "speakerName": "National Institute on Aging",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-08",
+      "slug": "lo-que-nunca-me-dijeron-de-la-menopausia",
+      "title": "Lo que nunca me dijeron de la Menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · Marta Marcè",
+      "description": "Sesión sobre experiencia real en la menopausia. Contenido de ejemplo basado en: Lo que nunca me dijeron de la Menopausia.",
+      "category": "Testimonios",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "a_GPulGpQd0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=a_GPulGpQd0",
+      "thumbnail": "https://i.ytimg.com/vi/a_GPulGpQd0/hqdefault.jpg",
+      "speakerId": "speaker-08",
+      "speakerName": "Marta Marcè",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-09",
+      "slug": "marthas-menopause-movement-esta-de-regreso-martha-debayle",
+      "title": "¡¡¡Martha’s Menopause Movement está de regreso!!! | Martha Debayle",
+      "subtitle": "Inspirado en contenido público de YouTube · Martha Debayle",
+      "description": "Sesión sobre movimiento en la menopausia. Contenido de ejemplo basado en: ¡¡¡Martha’s Menopause Movement está de regreso!!! | Martha Debayle.",
+      "category": "Comunidad",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "H9fb2RLkqZ4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=H9fb2RLkqZ4",
+      "thumbnail": "https://i.ytimg.com/vi/H9fb2RLkqZ4/hqdefault.jpg",
+      "speakerId": "speaker-09",
+      "speakerName": "Martha Debayle",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-10",
+      "slug": "como-perder-peso-en-la-menopausia-regulando-tus-hormonas",
+      "title": "Cómo perder peso en LA MENOPAUSIA regulando TUS HORMONAS",
+      "subtitle": "Inspirado en contenido público de YouTube · Marta León ",
+      "description": "Sesión sobre hormonas y peso en la menopausia. Contenido de ejemplo basado en: Cómo perder peso en LA MENOPAUSIA regulando TUS HORMONAS.",
+      "category": "Nutrición",
+      "format": "Taller",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "dIB97N2ogZI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=dIB97N2ogZI",
+      "thumbnail": "https://i.ytimg.com/vi/dIB97N2ogZI/hqdefault.jpg",
+      "speakerId": "speaker-10",
+      "speakerName": "Marta León ",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-11",
+      "slug": "como-tratar-la-menopausia",
+      "title": "¿CÓMO TRATAR LA MENOPAUSIA?",
+      "subtitle": "Inspirado en contenido público de YouTube · Academia Unani | David Duarte",
+      "description": "Sesión sobre tratamientos en la menopausia. Contenido de ejemplo basado en: ¿CÓMO TRATAR LA MENOPAUSIA?.",
+      "category": "Medicina",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "YOMeOb3DlFI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=YOMeOb3DlFI",
+      "thumbnail": "https://i.ytimg.com/vi/YOMeOb3DlFI/hqdefault.jpg",
+      "speakerId": "speaker-11",
+      "speakerName": "Academia Unani | David Duarte",
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "curso-12",
+      "slug": "estrogeno-y-tu-metabolismo-en-menopausia",
+      "title": "Estrógeno y tu metabolismo en menopausia",
+      "subtitle": "Inspirado en contenido público de YouTube · Dra. Cynthia Dickter - Ginecóloga Obstetra",
+      "description": "Sesión sobre metabolismo y estrógeno en la menopausia. Contenido de ejemplo basado en: Estrógeno y tu metabolismo en menopausia.",
+      "category": "Hormonas",
+      "format": "Masterclass",
+      "duration": "60–90 min",
+      "level": "Todos los niveles",
+      "youtubeId": "lSG3uf3WXRQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=lSG3uf3WXRQ",
+      "thumbnail": "https://i.ytimg.com/vi/lSG3uf3WXRQ/hqdefault.jpg",
+      "speakerId": "speaker-12",
+      "speakerName": "Dra. Cynthia Dickter - Ginecóloga Obstetra",
+      "status": "published",
+      "featured": false
+    }
+  ],
+  "speakers": [
+    {
+      "id": "speaker-01",
+      "name": "Medical Legal Center",
+      "slug": "ponente-01",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Medical Legal Center — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Salud metabólica"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-02",
+      "name": "Marta Marcè",
+      "slug": "ponente-02",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Marta Marcè — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Bienestar"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-03",
+      "name": "Academia Aleris",
+      "slug": "ponente-03",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Academia Aleris — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Nutrición"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-04",
+      "name": "Escuela de Salud Integrativa",
+      "slug": "ponente-04",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Escuela de Salud Integrativa — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Salud integral"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-05",
+      "name": "Doctor Actualizado",
+      "slug": "ponente-05",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Doctor Actualizado — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Medicina"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-06",
+      "name": "Martha Debayle",
+      "slug": "ponente-06",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Martha Debayle — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Comunidad"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-07",
+      "name": "National Institute on Aging",
+      "slug": "ponente-07",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. National Institute on Aging — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Bienestar"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-08",
+      "name": "Marta Marcè",
+      "slug": "ponente-08",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Marta Marcè — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Testimonios"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-09",
+      "name": "Martha Debayle",
+      "slug": "ponente-09",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Martha Debayle — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Comunidad"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-10",
+      "name": "Marta León ",
+      "slug": "ponente-10",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Marta León  — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Nutrición"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-11",
+      "name": "Academia Unani | David Duarte",
+      "slug": "ponente-11",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Academia Unani | David Duarte — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Medicina"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    },
+    {
+      "id": "speaker-12",
+      "name": "Dra. Cynthia Dickter - Ginecóloga Obstetra",
+      "slug": "ponente-12",
+      "title": "Ponente invitada",
+      "bio": "Perfil de ejemplo. Dra. Cynthia Dickter - Ginecóloga Obstetra — la ponente podrá completar bio, foto, redes y especialidades desde el portal de ponentes.",
+      "photo": "",
+      "specialties": [
+        "Hormonas"
+      ],
+      "email": "",
+      "social": {
+        "instagram": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "canEditOwnProfile": true
+    }
+  ]
+}

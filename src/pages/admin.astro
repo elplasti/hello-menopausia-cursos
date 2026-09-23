@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedCourses } from '../lib/content';
+
+const courses = await getPublishedCourses();
+const seed = courses.map((course) => ({
+  id: course.data.courseId,
+  slug: course.id,
+  title: course.data.title,
+  description: course.data.description,
+  category: course.data.category,
+  format: course.data.format,
+  duration: course.data.duration,
+  level: course.data.level,
+  youtubeId: course.data.youtubeId,
+  speakerName: course.data.speakerName,
+  speakerSlug: course.data.speakerSlug,
+  featured: course.data.featured,
+  status: course.data.status,
+  example: true,
+}));
+
+const adminPassword = import.meta.env.PUBLIC_ADMIN_PASSWORD || 'hello-admin';
+---
+
+<BaseLayout
+  title="Admin"
+  description="Panel del equipo para gestionar el catálogo de cursos de Hello Menopausia."
+>
+  <section class="page-hero page-hero-plain">
+    <div class="container">
+      <p class="eyebrow">Equipo</p>
+      <h1>Gestionar <em>cursos</em></h1>
+      <p class="hero-lead">
+        Panel local para el equipo. Esta versión estática guarda cambios en el navegador y permite
+        exportar JSON para actualizar las colecciones.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="container narrow">
+      <div class="admin-card" id="login-card">
+        <h2 style="margin-top:0">Acceso del equipo</h2>
+        <p class="form-note">
+          Contraseña de entorno <code>PUBLIC_ADMIN_PASSWORD</code>. Si no se define, el valor por
+          defecto es <code>hello-admin</code>.
+        </p>
+        <form id="login-form">
+          <div class="form-row">
+            <label for="admin-password">Contraseña</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+          <p class="form-error" id="login-error" hidden></p>
+        </form>
+      </div>
+
+      <div id="admin-app" hidden>
+        <div class="admin-card" style="margin-bottom: 1.5rem">
+          <div class="admin-actions" style="justify-content: space-between; margin-bottom: 1rem">
+            <h2 style="margin:0">Catálogo</h2>
+            <div class="admin-actions">
+              <button class="btn btn-sm btn-outline-pill" type="button" id="export-btn">Exportar JSON</button>
+              <button class="btn btn-sm btn-outline-pill" type="button" id="reset-btn">Restablecer</button>
+              <button class="btn btn-sm btn-primary" type="button" id="logout-btn">Salir</button>
+            </div>
+          </div>
+          <p class="form-note">
+            Los 12 cursos semilla viven en colecciones de contenido. Los cambios de este panel se
+            fusionan en <code>localStorage</code> hasta conectar un CMS.
+          </p>
+          <div style="overflow-x:auto">
+            <table class="admin-table" id="course-table">
+              <thead>
+                <tr>
+                  <th>Curso</th>
+                  <th>Formato</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="margin-top:0" id="form-title">Agregar o editar curso</h2>
+          <form id="course-form">
+            <input type="hidden" name="slug" id="field-slug" />
+            <div class="form-row">
+              <label for="field-title">Título</label>
+              <input id="field-title" name="title" required minlength="4" />
+            </div>
+            <div class="form-row">
+              <label for="field-description">Descripción</label>
+              <textarea id="field-description" name="description" required minlength="20"></textarea>
+            </div>
+            <div class="form-row">
+              <label for="field-category">Categoría</label>
+              <input id="field-category" name="category" required />
+            </div>
+            <div class="form-row">
+              <label for="field-format">Formato</label>
+              <select id="field-format" name="format" required>
+                <option value="Masterclass">Masterclass</option>
+                <option value="Taller">Taller</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="field-youtube">ID de YouTube</label>
+              <input id="field-youtube" name="youtubeId" required pattern="[A-Za-z0-9_-]{6,}" />
+            </div>
+            <div class="form-row">
+              <label for="field-speaker">Nombre de la ponente</label>
+              <input id="field-speaker" name="speakerName" required />
+            </div>
+            <div class="form-row">
+              <label>
+                <input type="checkbox" name="featured" id="field-featured" />
+                Destacado
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                <input type="checkbox" name="published" id="field-published" checked />
+                Publicado
+              </label>
+            </div>
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">Guardar curso</button>
+              <button class="btn btn-outline-pill" type="button" id="cancel-edit">Nuevo</button>
+            </div>
+            <p class="form-error" id="form-error" hidden></p>
+            <p class="form-success" id="form-success" hidden>Curso guardado en este navegador.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ seed, adminPassword }}>
+  const STORAGE_KEY = 'hm-cursos-overrides';
+  const SESSION_KEY = 'hm-admin-ok';
+
+  const loginCard = document.getElementById('login-card');
+  const adminApp = document.getElementById('admin-app');
+  const loginForm = document.getElementById('login-form');
+  const loginError = document.getElementById('login-error');
+  const courseForm = document.getElementById('course-form');
+  const tableBody = document.querySelector('#course-table tbody');
+  const formError = document.getElementById('form-error');
+  const formSuccess = document.getElementById('form-success');
+
+  function slugify(value) {
+    return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
+  function readOverrides() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  function writeOverrides(overrides) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(overrides));
+  }
+
+  function mergedCourses() {
+    const overrides = readOverrides();
+    const bySlug = new Map(seed.map((course) => [course.slug, { ...course }]));
+    for (const [slug, patch] of Object.entries(overrides)) {
+      bySlug.set(slug, { ...(bySlug.get(slug) || { slug, example: true }), ...patch, slug });
+    }
+    return [...bySlug.values()];
+  }
+
+  function showAdmin(show) {
+    loginCard.hidden = show;
+    adminApp.hidden = !show;
+  }
+
+  function renderTable() {
+    const rows = mergedCourses()
+      .map((course) => {
+        const publicUrl = `/cursos/${course.slug}`;
+        return `<tr>
+          <td><strong>${course.title}</strong><br><span style="color:var(--ink-4)">${course.speakerName}</span></td>
+          <td>${course.format}</td>
+          <td>${course.status}${course.featured ? ' · destacado' : ''}</td>
+          <td class="admin-actions">
+            <button class="btn btn-sm btn-outline-pill" data-edit="${course.slug}" type="button">Editar</button>
+            <a class="btn btn-sm btn-outline-pill" href="${publicUrl}">Ver</a>
+          </td>
+        </tr>`;
+      })
+      .join('');
+    tableBody.innerHTML = rows;
+    tableBody.querySelectorAll('[data-edit]').forEach((button) => {
+      button.addEventListener('click', () => fillForm(button.getAttribute('data-edit')));
+    });
+  }
+
+  function fillForm(slug) {
+    const course = mergedCourses().find((item) => item.slug === slug);
+    if (!course) return;
+    courseForm.elements.slug.value = course.slug;
+    courseForm.elements.title.value = course.title;
+    courseForm.elements.description.value = course.description;
+    courseForm.elements.category.value = course.category;
+    courseForm.elements.format.value = course.format;
+    courseForm.elements.youtubeId.value = course.youtubeId;
+    courseForm.elements.speakerName.value = course.speakerName;
+    courseForm.elements.featured.checked = Boolean(course.featured);
+    courseForm.elements.published.checked = course.status !== 'draft';
+    document.getElementById('form-title').textContent = 'Editar curso';
+    formSuccess.hidden = true;
+  }
+
+  function resetForm() {
+    courseForm.reset();
+    courseForm.elements.slug.value = '';
+    courseForm.elements.published.checked = true;
+    document.getElementById('form-title').textContent = 'Agregar o editar curso';
+  }
+
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const password = new FormData(loginForm).get('password');
+    if (password !== adminPassword) {
+      loginError.hidden = false;
+      loginError.textContent = 'Contraseña incorrecta.';
+      return;
+    }
+    sessionStorage.setItem(SESSION_KEY, '1');
+    loginError.hidden = true;
+    showAdmin(true);
+    renderTable();
+  });
+
+  courseForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    formError.hidden = true;
+    formSuccess.hidden = true;
+    const data = new FormData(courseForm);
+    const title = String(data.get('title') || '').trim();
+    const youtubeId = String(data.get('youtubeId') || '').trim();
+    if (!title || !youtubeId) {
+      formError.hidden = false;
+      formError.textContent = 'Título e ID de YouTube son obligatorios.';
+      return;
+    }
+    const slug = String(data.get('slug') || '') || slugify(title);
+    const overrides = readOverrides();
+    overrides[slug] = {
+      id: `local-${slug}`,
+      slug,
+      title,
+      description: String(data.get('description') || '').trim(),
+      category: String(data.get('category') || '').trim(),
+      format: String(data.get('format') || 'Masterclass'),
+      duration: '60–90 min',
+      level: 'Todos los niveles',
+      youtubeId,
+      youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+      thumbnail: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
+      speakerName: String(data.get('speakerName') || '').trim(),
+      featured: courseForm.elements.featured.checked,
+      status: courseForm.elements.published.checked ? 'published' : 'draft',
+      example: true,
+    };
+    writeOverrides(overrides);
+    formSuccess.hidden = false;
+    renderTable();
+  });
+
+  document.getElementById('cancel-edit').addEventListener('click', resetForm);
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    showAdmin(false);
+  });
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (confirm('¿Borrar los cambios locales y volver a los 12 cursos semilla?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      resetForm();
+      renderTable();
+    }
+  });
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(mergedCourses(), null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'cursos-hello-menopausia.json';
+    link.click();
+    URL.revokeObjectURL(url);
+  });
+
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    showAdmin(true);
+    renderTable();
+  }
+</script>
